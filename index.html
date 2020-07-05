@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="ScriptsBundle">
+    <title>LR TRACKING</title>
+    <!-- =-=-=-=-=-=-= Bootstrap CSS Style =-=-=-=-=-=-= -->
+
+    <!-- =-=-=-=-=-=-= Template CSS Style =-=-=-=-=-=-= -->
+ 
+    <!-- =-=-=-=-=-=-= Font Awesome =-=-=-=-=-=-= -->
+ <link rel="stylesheet" href="css/font-awesome.css" type="text/css">
+
+</head>
+
+<body onload="setFucusOnInput()">
+
+ <!-- =-=-=-=-=-=-= HOME Banner =-=-=-=-=-=-= -->
+    <div class="hero-3 full-section " id="banner">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6" style="float:left;">
+          <h2>Track Your Shipment</h2>
+          <div class="form">
+           
+              <input type="text" class="form-control"  placeholder="Your Tracking Number" id="FieldData" onkeypress="onEnterKeyEvent(event)">
+              <button onClick="onSubmitUpDateIFrameUrl()" id="track">Track</button>
+          </div>
+        </div>
+         <div class="col-md-6" style="float:left;">
+			<div id="iframeCargoLRSearchResult" style="display: none;"> 
+			<iframe seamless="seamless" border="0" id="lrSearchFrame" name="lrSearchFrame" src="" width="500" height="350"></iframe>
+			<table class="branches" width="505" cellspacing="0" cellpadding="7" bordercolor="#F8F8F8" border="0">
+				
+			</table>
+		</div>
+         </div>
+      </div>
+    </div>
+  </div>
+    <!--======= HOME Banner END =========-->
+   
+     <!-- Tracking JS -->
+   <script>
+   
+   function onSubmitUpDateIFrameUrl(){
+
+	var lRNumber		= document.getElementById('FieldData').value;
+	var lrSearchFrame 	= document.getElementById('lrSearchFrame');
+	lRNumber 			= trim(lRNumber);
+	if(lRNumber.length != 0){
+	//document.getElementById('ajax-loader').style.display = "block";
+	lrSearchFrame.src	= "https://ivcargo.in/ivcargo/Ajax.do?pageId=9&eventId=3&wayBillNumber="+lRNumber+"&accountGroupId=374";
+	//document.getElementById('homePageData').style.display ="none";
+	//document.getElementById('homePageDataImage').style.display ="none";
+	document.getElementById('iframeCargoLRSearchResult').style.display ="block";
+	}else{
+		$('#FieldData').focus();
+		alert("Please Enter LR Number");
+	}
+		//document.getElementById('ajax-loader').style.display = "none";
+}
+
+function trim (myString){      
+    return myString.replace(/^s+/g,'').replace(/s+$/g,'')     
+}
+
+function destroyModel() {
+	$('#FieldData').val("");
+	document.getElementById('iframeCargoLRSearchResult').style.display ="none";
+	$('#iframeCargoLRSearchResult').val("");
+}
+
+function onEnterKeyEvent(event){
+	if(event.which == 13){
+		$('#track').focus();
+		//onSubmitUpDateIFrameUrl();
+	}
+  
+}
+
+
+function setFucusOnInput(){
+	
+   setTimeout(function(){$("#FieldData").focus(); }, 1000);
+}
+   
+   </script>
+</body>
+
+</html>
